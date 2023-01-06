@@ -58,45 +58,47 @@ Vagrant.configure('2') do |config|
     end
   end
 
-  (0..2).each do |i|
-    config.vm.define "#{cluster_name}-worker-#{i}" do |worker|
-      worker.vm.hostname = "#{cluster_name}-worker-#{i}"
-      worker.vm.network 'private_network', ip: "#{cluster_network}.2#{i}"
-      worker.vm.provision 'shell', inline: "echo '#{cluster_network}.2#{i} #{cluster_name}-worker-#{i}' > /etc/hosts"
+  #  WORKERS DEFFERED TO ANOTHER MACHINE DUE TO RAM LIMITS (SEE ./vagrant_extra_host)
+  #  -----------------------------------------------------------------------------------
+  # (0..2).each do |i|
+  #   config.vm.define "#{cluster_name}-worker-#{i}" do |worker|
+  #     worker.vm.hostname = "#{cluster_name}-worker-#{i}"
+  #     worker.vm.network 'private_network', ip: "#{cluster_network}.2#{i}"
+  #     worker.vm.provision 'shell', inline: "echo '#{cluster_network}.2#{i} #{cluster_name}-worker-#{i}' > /etc/hosts"
 
-      ### uncomment this to add custom DNS to your VM
-      # worker.vm.provision 'shell', inline: $dns_script, run: "always"
+  #     ### uncomment this to add custom DNS to your VM
+  #     # worker.vm.provision 'shell', inline: $dns_script, run: "always"
 
-      ### uncomment this to add host public ssh key to your VM
-      ### you need to have the public ssh key in ~/.ssh/id_rsa.pub 
-      # worker.vm.provision "shell" do |s|
-      #   ssh_pub_key = File.readlines("#{Dir.home}/.ssh/id_rsa.pub").first.strip
-      #   s.inline = <<-SHELL
-      #     echo #{ssh_pub_key} >> /home/vagrant/.ssh/authorized_keys
-      #   SHELL
-      # end
+  #     ### uncomment this to add host public ssh key to your VM
+  #     ### you need to have the public ssh key in ~/.ssh/id_rsa.pub 
+  #     # worker.vm.provision "shell" do |s|
+  #     #   ssh_pub_key = File.readlines("#{Dir.home}/.ssh/id_rsa.pub").first.strip
+  #     #   s.inline = <<-SHELL
+  #     #     echo #{ssh_pub_key} >> /home/vagrant/.ssh/authorized_keys
+  #     #   SHELL
+  #     # end
 
-      ### Uncomment this if you need to add self signed CA to trust
-      ### you need to install vagrant-certificates plugin
-      ### vagrant plugin install vagrant-certificates
-      # worker.certificates.enabled = true
-      # worker.certificates.certs = Dir.glob('../../template/ca/root-cert.pem')
+  #     ### Uncomment this if you need to add self signed CA to trust
+  #     ### you need to install vagrant-certificates plugin
+  #     ### vagrant plugin install vagrant-certificates
+  #     # worker.certificates.enabled = true
+  #     # worker.certificates.certs = Dir.glob('../../template/ca/root-cert.pem')
 
-      worker.vm.provider 'virtualbox' do |vb|
-        vb.name = "#{cluster_name}-worker-#{i}"
-        vb.memory = 4096
-        vb.cpus = 4
-        vb.customize ['modifyvm', :id, '--nicpromisc2', 'allow-all']
-        vb.customize ['modifyvm', :id, '--nested-hw-virt', 'on']
+  #     worker.vm.provider 'virtualbox' do |vb|
+  #       vb.name = "#{cluster_name}-worker-#{i}"
+  #       vb.memory = 4096
+  #       vb.cpus = 4
+  #       vb.customize ['modifyvm', :id, '--nicpromisc2', 'allow-all']
+  #       vb.customize ['modifyvm', :id, '--nested-hw-virt', 'on']
 
-        unless File.exist?("./#{cluster_name}-worker-#{i}-disk-02.vdi")
-          vb.customize ['createhd', '--filename', "./#{cluster_name}-worker-#{i}-disk-02.vdi", '--variant', 'Standard', '--size', 100 * 1024]
-        end
+  #       unless File.exist?("./#{cluster_name}-worker-#{i}-disk-02.vdi")
+  #         vb.customize ['createhd', '--filename', "./#{cluster_name}-worker-#{i}-disk-02.vdi", '--variant', 'Standard', '--size', 100 * 1024]
+  #       end
 
-        vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', "./#{cluster_name}-worker-#{i}-disk-02.vdi"]
-      end
-    end
-  end
+  #       vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', "./#{cluster_name}-worker-#{i}-disk-02.vdi"]
+  #     end
+  #   end
+  # end
 
   config.vm.define "#{cluster_name}-deployer" do |deployer|
     deployer.vm.hostname = "#{cluster_name}-deployer"

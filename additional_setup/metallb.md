@@ -23,6 +23,6 @@ data:
     - name: default
       protocol: layer2
       addresses:
-      - 10.200.100.110-10.200.100.250
+      - 192.168.1.110-192.168.1.250
 EOF
 ```

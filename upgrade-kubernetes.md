@@ -25,7 +25,7 @@ kubent
 #### Upgrade step
 * SSH to deployer node
 ```bash
-ssh vagrant@10.200.100.30
+ssh vagrant@192.168.1.30
 ```
 
 * Go to `kubernetes-hardway-ansible` directory, checkout to master
@@ -63,7 +63,7 @@ kubectl get daemonset kube-flannel-ds --namespace kube-system -o=jsonpath='{$.sp
 #### Upgrade step
 * SSH to deployer node
 ```bash
-ssh vagrant@10.200.100.30
+ssh vagrant@192.168.1.30
 ```
 
 * Go to `kubernetes-hardway-ansible` directory, checkout to master
@@ -103,7 +103,7 @@ Please note that upgrading from v1.19.10 to v1.20.12 will also upgrade flannel, 
 #### Upgrade step
 * SSH to deployer node
 ```bash
-ssh vagrant@10.200.100.30
+ssh vagrant@192.168.1.30
 ```
 
 * Go to `kubernetes-hardway-ansible` directory, checkout to master
@@ -143,7 +143,7 @@ Please note that upgrading from v1.18.7 to v1.19.10 will also upgrade flannel, c
 #### Upgrade step
 * SSH to deployer node
 ```bash
-ssh vagrant@10.200.100.30
+ssh vagrant@192.168.1.30
 ```
 
 * Go to `kubernetes-hardway-ansible` directory, checkout to master
