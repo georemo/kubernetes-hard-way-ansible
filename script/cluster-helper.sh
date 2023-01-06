@@ -13,4 +13,4 @@ read -p "network address: " NETWORK_ADDRESS
 
 echo ""
 find . -type f -exec sed -i "s/kubernetes-cluster-01/$CLUSTER_NAME/g" {} \;
-find . -type f -exec sed -i "s/10.200.100/$NETWORK_ADDRESS/g" {} \;
+find . -type f -exec sed -i "s/192.168.1/$NETWORK_ADDRESS/g" {} \;

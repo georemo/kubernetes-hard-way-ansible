@@ -18,17 +18,19 @@ Vagrant.configure('2') do |config|
 
   ### cluster network configuration
   ### configure this also in the group_vars/all.yml and hosts/hosts
+  config.vm.network "public_network", bridge: "wlp2s0: Wi-Fi (AirPort)", auto_config: true
 
   ### currently only support /24
   ### please provide only the network section
   ### TODO: make this more configurable
-  cluster_network = "10.200.100"
+  cluster_network = "192.168.1"
 
   (0..2).each do |i|
     config.vm.define "#{cluster_name}-master-#{i}" do |master|
       master.vm.hostname = "#{cluster_name}-master-#{i}"
       master.vm.provision 'shell', inline: "echo '#{cluster_network}.1#{i} #{cluster_name}-master-#{i}' > /etc/hosts"
-      master.vm.network 'private_network', ip: "#{cluster_network}.1#{i}"
+      # master.vm.network 'private_network', ip: "#{cluster_network}.1#{i}"
+      master.vm.network :public_network, ip: "#{cluster_network}.1#{i}"
 
       ### uncomment this to add custom DNS to your VM
       # master.vm.provision 'shell', inline: $dns_script, run: "always"
@@ -102,7 +104,8 @@ Vagrant.configure('2') do |config|
 
   config.vm.define "#{cluster_name}-deployer" do |deployer|
     deployer.vm.hostname = "#{cluster_name}-deployer"
-    deployer.vm.network 'private_network', ip: "#{cluster_network}.30"
+    # deployer.vm.network 'private_network', ip: "#{cluster_network}.30"
+    deployer.vm.network :public_network, ip: "#{cluster_network}.30"
     deployer.vm.provision 'shell', inline: "echo '#{cluster_network}.30 #{cluster_name}-deployer' > /etc/hosts"
           
     ### uncomment this to add custom DNS to your VM
