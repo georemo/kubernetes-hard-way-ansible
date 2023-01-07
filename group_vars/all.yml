@@ -39,7 +39,7 @@ kubernetes:
       # generate with command
       # head -c 32 /dev/urandom | base64
       # please regenerate this
-      key: falsmL6m75H0ghVKVWloOAvGlfz68e4XWhC9DejynoA=
+      key: ZpC1DrroZ/83W+Nrts/Me3mzbusZwQzuHBIFNpTY4wo=
   ### list of addons Kubernetes component
   addonsComponents:
     ### Kubernetes cluster will use different resolv.conf
@@ -90,10 +90,10 @@ infrastructure:
     ### certificate expired time (1 year)
     certificate:
       expireTime: 8760h
-    city: Jakarta
+    city: Kisumu
     country: ID
-    organizationUnit: Kubernetes
-    province: Jakarta
+    organizationUnit: Corpdesk
+    province: Kisumu
   keepalived:
     ### IP of one of the Kubernetes master
     ### this will be the default master for keepalived

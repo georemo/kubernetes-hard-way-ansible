@@ -88,7 +88,7 @@ vi hosts/hosts
 
 * Run ansible
 ```
-ansible-playbook main.yml -i hosts/hosts
+ansible-playbook main.yml -i hosts/hosts.ini
 ```
 
 Please backup certificate directory in the deployer node!
