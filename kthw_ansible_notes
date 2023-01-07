@@ -1,2 +1,6 @@
 Experiencing issue:https://serverfault.com/questions/500764/dpkg-reconfigure-unable-to-re-open-stdin-no-file-or-directory
 adopteed: export DEBIAN_FRONTEND=noninteractive
+
+- after vagrant up, (if no dedicated dns server)check that all machines have the /etc/hosts set properly
+- otherwise if dedicated server is set, make sure /etc/resolve.conf has the right nameserver
+- confirm the machines can ping each other

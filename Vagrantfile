@@ -7,7 +7,11 @@ Vagrant.configure('2') do |config|
   # echo "127.0.0.1 localhost" >> /etc/hosts
   # SCRIPT
 
-  $ansible_script = <<-'SCRIPT'
+  
+
+  
+
+  $common_installations = <<-'SCRIPT'
   echo "192.168.1.10 "$cluster_name"-master-0" >> /etc/hosts
   echo "192.168.1.11 "$cluster_name"-master-1" >> /etc/hosts
   echo "192.168.1.12 "$cluster_name"-master-2" >> /etc/hosts
@@ -15,10 +19,18 @@ Vagrant.configure('2') do |config|
   echo "192.168.1.21 "$cluster_name"-worker-1" >> /etc/hosts
   echo "192.168.1.22 "$cluster_name"-worker-2" >> /etc/hosts
   echo "192.168.1.30 "$cluster_name"-deployer" >> /etc/hosts
-  export DEBIAN_FRONTEND=noninteractive
+  SCRIPT
+
+  $deployer_installations = <<-'SCRIPT'
   sudo apt-get update -y
   sudo apt-get install ansible sshpass lvm2 -y
   SCRIPT
+
+  # $controller_installations = <<-'SCRIPT'
+  # SCRIPT
+
+  # $worker_installations = <<-'SCRIPT'
+  # SCRIPT
 
   ### cluster name configuration
   ### configure this also in the group_vars/all.yml and hosts/hosts
@@ -36,9 +48,11 @@ Vagrant.configure('2') do |config|
   (0..2).each do |i|
     config.vm.define "#{cluster_name}-master-#{i}" do |master|
       master.vm.hostname = "#{cluster_name}-master-#{i}"
-      master.vm.provision 'shell', inline: "echo '#{cluster_network}.1#{i} #{cluster_name}-master-#{i}' > /etc/hosts"
+      # master.vm.provision 'shell', inline: "echo '#{cluster_network}.1#{i} #{cluster_name}-master-#{i}' > /etc/hosts"
+      master.vm.provision 'shell', inline: $common_installations
       # master.vm.network 'private_network', ip: "#{cluster_network}.1#{i}"
       master.vm.network :public_network, ip: "#{cluster_network}.1#{i}"
+      
 
       ### uncomment this to add custom DNS to your VM
       # master.vm.provision 'shell', inline: $dns_script, run: "always"
@@ -75,6 +89,7 @@ Vagrant.configure('2') do |config|
   #     worker.vm.hostname = "#{cluster_name}-worker-#{i}"
   #     worker.vm.network 'private_network', ip: "#{cluster_network}.2#{i}"
   #     worker.vm.provision 'shell', inline: "echo '#{cluster_network}.2#{i} #{cluster_name}-worker-#{i}' > /etc/hosts"
+  #      worker.vm.provision 'shell', inline: $common_installations
 
   #     ### uncomment this to add custom DNS to your VM
   #     # worker.vm.provision 'shell', inline: $dns_script, run: "always"
@@ -114,7 +129,9 @@ Vagrant.configure('2') do |config|
     deployer.vm.hostname = "#{cluster_name}-deployer"
     # deployer.vm.network 'private_network', ip: "#{cluster_network}.30"
     deployer.vm.network :public_network, ip: "#{cluster_network}.30"
-    deployer.vm.provision 'shell', inline: "echo '#{cluster_network}.30 #{cluster_name}-deployer' > /etc/hosts"
+    # deployer.vm.provision 'shell', inline: "echo '#{cluster_network}.30 #{cluster_name}-deployer' > /etc/hosts"
+    deployer.vm.provision 'shell', inline: $common_installations
+    deployer.vm.provision 'shell', inline: $deployer_installations
           
     ### uncomment this to add custom DNS to your VM
     # deployer.vm.provision 'shell', inline: $dns_script, run: "always"
@@ -134,7 +151,7 @@ Vagrant.configure('2') do |config|
     # deployer.certificates.enabled = true
     # deployer.certificates.certs = Dir.glob('../../template/ca/root-cert.pem')
 
-    deployer.vm.provision 'shell', inline: $ansible_script
+    
     deployer.vm.provider 'virtualbox' do |vb|
       vb.name = "#{cluster_name}-deployer"
       vb.memory = 1024
