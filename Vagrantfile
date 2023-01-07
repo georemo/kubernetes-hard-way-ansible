@@ -8,17 +8,19 @@ Vagrant.configure('2') do |config|
   # SCRIPT
 
   
-
+  ### cluster name configuration
+  ### configure this also in the group_vars/all.yml and hosts/hosts
+  cluster_name = "kubernetes-cluster-01"
   
 
   $common_installations = <<-'SCRIPT'
-  echo "192.168.1.10 "$cluster_name"-master-0" >> /etc/hosts
-  echo "192.168.1.11 "$cluster_name"-master-1" >> /etc/hosts
-  echo "192.168.1.12 "$cluster_name"-master-2" >> /etc/hosts
-  echo "192.168.1.20 "$cluster_name"-worker-0" >> /etc/hosts
-  echo "192.168.1.21 "$cluster_name"-worker-1" >> /etc/hosts
-  echo "192.168.1.22 "$cluster_name"-worker-2" >> /etc/hosts
-  echo "192.168.1.30 "$cluster_name"-deployer" >> /etc/hosts
+  echo "192.168.1.10 kubernetes-cluster-01-master-0" >> /etc/hosts
+  echo "192.168.1.11 kubernetes-cluster-01-master-1" >> /etc/hosts
+  echo "192.168.1.12 kubernetes-cluster-01-master-2" >> /etc/hosts
+  echo "192.168.1.20 kubernetes-cluster-01-worker-0" >> /etc/hosts
+  echo "192.168.1.21 kubernetes-cluster-01-worker-1" >> /etc/hosts
+  echo "192.168.1.22 kubernetes-cluster-01-worker-2" >> /etc/hosts
+  echo "192.168.1.30 kubernetes-cluster-01-deployer" >> /etc/hosts
   SCRIPT
 
   $deployer_installations = <<-'SCRIPT'
@@ -31,10 +33,6 @@ Vagrant.configure('2') do |config|
 
   # $worker_installations = <<-'SCRIPT'
   # SCRIPT
-
-  ### cluster name configuration
-  ### configure this also in the group_vars/all.yml and hosts/hosts
-  cluster_name = "kubernetes-cluster-01"
 
   ### cluster network configuration
   ### configure this also in the group_vars/all.yml and hosts/hosts
