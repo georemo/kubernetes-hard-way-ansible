@@ -90,8 +90,8 @@
 - name: copy intermediete ca certificate into etcd node
   vars:
     etcd_ip: "{{ groups['etcd'] | join(' ') }}"
-  args:
-    chdir: "{{ kubernetes.certificate.directory }}"
+  # args:
+  #   chdir: "{{ kubernetes.certificate.directory }}"
   shell: |
     echo "starting the loop..."
     for instance in {{ etcd_ip }}; do
