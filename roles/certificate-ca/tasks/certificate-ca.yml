@@ -84,11 +84,14 @@
     chdir: "{{ kubernetes.certificate.directory }}/intermediates/kubernetes-service-account-management-ca"
 
 - name: copy intermediete ca certificate into etcd node
+  debug:
+    msg: "etcd_ip:{{ groups['etcd'] | join(' ') }}"
   vars:
     etcd_ip: "{{ groups['etcd'] | join(' ') }}"
   args:
     chdir: "{{ kubernetes.certificate.directory }}"
   shell: |
+    echo "starting the loop..."
     for instance in {{ etcd_ip }}; do
       scp {{ kubernetes.certificate.directory }}/intermediates/etcd-ca/etcd-ca.pem {{ user }}@${instance}:~/
       scp {{ kubernetes.certificate.directory }}/intermediates/etcd-ca/etcd-ca-key.pem {{ user }}@${instance}:~/
