@@ -95,7 +95,6 @@
   # args:
   #   executable: /bin/bash
   shell: |
-    # echo "starting the loop..."
     for instance in {{ etcd_ip }}; do
       sshpass -f "p" scp {{ kubernetes.certificate.directory }}/intermediates/etcd-ca/etcd-ca.pem {{ user }}@${instance}:~/
       sshpass -f "p" scp {{ kubernetes.certificate.directory }}/intermediates/etcd-ca/etcd-ca-key.pem {{ user }}@${instance}:~/
