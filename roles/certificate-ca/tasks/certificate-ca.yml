@@ -96,8 +96,8 @@
   #   executable: /bin/bash
   shell: |
     for instance in {{ etcd_ip }}; do
-      sshpass -f ~/p scp {{ kubernetes.certificate.directory }}/intermediates/etcd-ca/etcd-ca.pem {{ user }}@${instance}:~/
-      sshpass -f ~/p scp {{ kubernetes.certificate.directory }}/intermediates/etcd-ca/etcd-ca-key.pem {{ user }}@${instance}:~/
+       sshpass -f ~/p scp {{ kubernetes.certificate.directory }}/intermediates/etcd-ca/etcd-ca.pem {{ user }}@${instance}:~/
+       sshpass -f ~/p scp {{ kubernetes.certificate.directory }}/intermediates/etcd-ca/etcd-ca-key.pem {{ user }}@${instance}:~/
     done
 
 - name: copy intermediete ca certificate into master node
@@ -107,12 +107,12 @@
     chdir: "{{ kubernetes.certificate.directory }}"
   shell: |
     for instance in {{ master_ip }}; do
-      scp {{ kubernetes.certificate.directory }}/intermediates/etcd-ca/etcd-ca.pem {{ user }}@${instance}:~/
-      scp {{ kubernetes.certificate.directory }}/intermediates/kubernetes-ca/kubernetes-ca.pem {{ user }}@${instance}:~/
-      scp {{ kubernetes.certificate.directory }}/intermediates/kubernetes-ca/kubernetes-ca-key.pem {{ user }}@${instance}:~/
-      scp {{ kubernetes.certificate.directory }}/intermediates/kubernetes-front-proxy-ca/kubernetes-front-proxy-ca.pem {{ user }}@${instance}:~/
-      scp {{ kubernetes.certificate.directory }}/intermediates/kubernetes-service-account-management-ca/kubernetes-service-account-management-ca.pem {{ user }}@${instance}:~/
-      scp {{ kubernetes.certificate.directory }}/intermediates/kubernetes-service-account-management-ca/kubernetes-service-account-management-ca-key.pem {{ user }}@${instance}:~/
+       sshpass -f ~/p scp {{ kubernetes.certificate.directory }}/intermediates/etcd-ca/etcd-ca.pem {{ user }}@${instance}:~/
+       sshpass -f ~/p scp {{ kubernetes.certificate.directory }}/intermediates/kubernetes-ca/kubernetes-ca.pem {{ user }}@${instance}:~/
+       sshpass -f ~/p scp {{ kubernetes.certificate.directory }}/intermediates/kubernetes-ca/kubernetes-ca-key.pem {{ user }}@${instance}:~/
+       sshpass -f ~/p scp {{ kubernetes.certificate.directory }}/intermediates/kubernetes-front-proxy-ca/kubernetes-front-proxy-ca.pem {{ user }}@${instance}:~/
+       sshpass -f ~/p scp {{ kubernetes.certificate.directory }}/intermediates/kubernetes-service-account-management-ca/kubernetes-service-account-management-ca.pem {{ user }}@${instance}:~/
+       sshpass -f ~/p scp {{ kubernetes.certificate.directory }}/intermediates/kubernetes-service-account-management-ca/kubernetes-service-account-management-ca-key.pem {{ user }}@${instance}:~/
     done
 
 - name: copy intermediete ca certificate into worker node
@@ -122,5 +122,5 @@
     chdir: "{{ kubernetes.certificate.directory }}"
   shell: |
     for instance in {{ worker_ip }}; do
-      scp {{ kubernetes.certificate.directory }}/intermediates/kubernetes-ca/kubernetes-ca.pem {{ user }}@${instance}:~/
+       sshpass -f ~/p scp {{ kubernetes.certificate.directory }}/intermediates/kubernetes-ca/kubernetes-ca.pem {{ user }}@${instance}:~/
     done

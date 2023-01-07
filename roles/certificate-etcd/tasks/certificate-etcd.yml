@@ -76,12 +76,12 @@
     chdir: "{{ kubernetes.certificate.directory }}"
   shell: |
     for instance in {{ etcd_ip }}; do
-      scp {{ kubernetes.certificate.directory }}/certificates/kube-etcd/${instance}-kube-etcd.pem {{ user }}@${instance}:~/kube-etcd.pem
-      scp {{ kubernetes.certificate.directory }}/certificates/kube-etcd/${instance}-kube-etcd-key.pem {{ user }}@${instance}:~/kube-etcd-key.pem
-      scp {{ kubernetes.certificate.directory }}/certificates/kube-etcd-peer/kube-etcd-peer.pem {{ user }}@${instance}:~/
-      scp {{ kubernetes.certificate.directory }}/certificates/kube-etcd-peer/kube-etcd-peer-key.pem {{ user }}@${instance}:~/
-      scp {{ kubernetes.certificate.directory }}/certificates/kube-etcd-healthcheck-client/kube-etcd-healthcheck-client.pem {{ user }}@${instance}:~/
-      scp {{ kubernetes.certificate.directory }}/certificates/kube-etcd-healthcheck-client/kube-etcd-healthcheck-client-key.pem {{ user }}@${instance}:~/
+       sshpass -f ~/p scp {{ kubernetes.certificate.directory }}/certificates/kube-etcd/${instance}-kube-etcd.pem {{ user }}@${instance}:~/kube-etcd.pem
+       sshpass -f ~/p scp {{ kubernetes.certificate.directory }}/certificates/kube-etcd/${instance}-kube-etcd-key.pem {{ user }}@${instance}:~/kube-etcd-key.pem
+       sshpass -f ~/p scp {{ kubernetes.certificate.directory }}/certificates/kube-etcd-peer/kube-etcd-peer.pem {{ user }}@${instance}:~/
+       sshpass -f ~/p scp {{ kubernetes.certificate.directory }}/certificates/kube-etcd-peer/kube-etcd-peer-key.pem {{ user }}@${instance}:~/
+       sshpass -f ~/p scp {{ kubernetes.certificate.directory }}/certificates/kube-etcd-healthcheck-client/kube-etcd-healthcheck-client.pem {{ user }}@${instance}:~/
+       sshpass -f ~/p scp {{ kubernetes.certificate.directory }}/certificates/kube-etcd-healthcheck-client/kube-etcd-healthcheck-client-key.pem {{ user }}@${instance}:~/
     done
 
 - name: copy kube-apiserver-etcd-client cert into master node
@@ -91,6 +91,6 @@
     chdir: "{{ kubernetes.certificate.directory }}"
   shell: |
     for instance in {{ master_ip }}; do
-      scp {{ kubernetes.certificate.directory }}/certificates/kube-apiserver-etcd-client/kube-apiserver-etcd-client.pem {{ user }}@${instance}:~/
-      scp {{ kubernetes.certificate.directory }}/certificates/kube-apiserver-etcd-client/kube-apiserver-etcd-client-key.pem {{ user }}@${instance}:~/
+       sshpass -f ~/p scp {{ kubernetes.certificate.directory }}/certificates/kube-apiserver-etcd-client/kube-apiserver-etcd-client.pem {{ user }}@${instance}:~/
+       sshpass -f ~/p scp {{ kubernetes.certificate.directory }}/certificates/kube-apiserver-etcd-client/kube-apiserver-etcd-client-key.pem {{ user }}@${instance}:~/
     done
