@@ -1,0 +1,2 @@
+Experiencing issue:https://serverfault.com/questions/500764/dpkg-reconfigure-unable-to-re-open-stdin-no-file-or-directory
+adopteed: export DEBIAN_FRONTEND=noninteractive

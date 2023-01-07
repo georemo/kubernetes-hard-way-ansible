@@ -8,8 +8,16 @@ Vagrant.configure('2') do |config|
   # SCRIPT
 
   $ansible_script = <<-'SCRIPT'
-  sudo apt update -y
-  sudo apt install ansible sshpass lvm2 -y
+  echo "192.168.1.10 "$cluster_name"-master-0" >> /etc/hosts
+  echo "192.168.1.11 "$cluster_name"-master-1" >> /etc/hosts
+  echo "192.168.1.12 "$cluster_name"-master-2" >> /etc/hosts
+  echo "192.168.1.20 "$cluster_name"-worker-0" >> /etc/hosts
+  echo "192.168.1.21 "$cluster_name"-worker-1" >> /etc/hosts
+  echo "192.168.1.22 "$cluster_name"-worker-2" >> /etc/hosts
+  echo "192.168.1.30 "$cluster_name"-deployer" >> /etc/hosts
+  export DEBIAN_FRONTEND=noninteractive
+  sudo apt-get update -y
+  sudo apt-get install ansible sshpass lvm2 -y
   SCRIPT
 
   ### cluster name configuration

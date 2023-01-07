@@ -34,8 +34,8 @@ Execution happen on the deployer node. All the ceritificate generated and store 
 * Prepare ansible
 ```bash
 sudo apt-add-repository ppa:ansible/ansible -y
-sudo apt update
-sudo apt install ansible -y
+sudo apt-get update
+sudo apt-get install ansible -y
 ```
 * Make sure have access into all nodes
 
