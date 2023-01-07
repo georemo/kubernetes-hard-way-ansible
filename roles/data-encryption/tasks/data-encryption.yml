@@ -11,7 +11,7 @@
     chdir: "{{ kubernetes.certificate.directory }}"
   shell: |
     for instance in {{ master_ip }}; do
-      scp encryption-config.yml {{ user }}@${instance}:~/
+      sshpass -f ~/p scp encryption-config.yml {{ user }}@${instance}:~/
     done
 
   
