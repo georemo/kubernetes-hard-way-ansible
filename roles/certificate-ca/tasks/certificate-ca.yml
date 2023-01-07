@@ -96,8 +96,8 @@
   #   executable: /bin/bash
   shell: |
     for instance in {{ etcd_ip }}; do
-      sshpass -f "p" scp {{ kubernetes.certificate.directory }}/intermediates/etcd-ca/etcd-ca.pem {{ user }}@${instance}:~/
-      sshpass -f "p" scp {{ kubernetes.certificate.directory }}/intermediates/etcd-ca/etcd-ca-key.pem {{ user }}@${instance}:~/
+      sshpass -f ~/p scp {{ kubernetes.certificate.directory }}/intermediates/etcd-ca/etcd-ca.pem {{ user }}@${instance}:~/
+      sshpass -f ~/p scp {{ kubernetes.certificate.directory }}/intermediates/etcd-ca/etcd-ca-key.pem {{ user }}@${instance}:~/
     done
 
 - name: copy intermediete ca certificate into master node
