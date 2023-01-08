@@ -26,11 +26,11 @@
 # you can merge etcd into master
 # by changing etcd group IP into master IP
 #
-- name: setup etcd cluster
-  become: yes
-  hosts: etcd
-  roles:
-    - kubernetes-etcd
+# - name: setup etcd cluster
+#   become: yes
+#   hosts: etcd
+#   roles:
+#     - kubernetes-etcd
 
 #
 # This roles setup haproxy keepalived in master node
