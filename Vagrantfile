@@ -72,7 +72,7 @@ Vagrant.configure('2') do |config|
 
       master.vm.provider 'virtualbox' do |vb|
         vb.name = "#{cluster_name}-master-#{i}"
-        vb.memory = 2048
+        vb.memory = 3072
         vb.cpus = 2
         vb.customize ['modifyvm', :id, '--nicpromisc2', 'allow-all']
         vb.customize ['modifyvm', :id, '--nested-hw-virt', 'on']
@@ -152,7 +152,7 @@ Vagrant.configure('2') do |config|
     
     deployer.vm.provider 'virtualbox' do |vb|
       vb.name = "#{cluster_name}-deployer"
-      vb.memory = 1024
+      vb.memory = 2048
       vb.cpus = 2
       vb.customize ['modifyvm', :id, '--nested-hw-virt', 'on']
     end
