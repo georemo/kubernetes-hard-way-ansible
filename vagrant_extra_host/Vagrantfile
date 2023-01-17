@@ -12,13 +12,13 @@ Vagrant.configure('2') do |config|
   # SCRIPT
 
   $common_installations = <<-'SCRIPT'
-  echo "192.168.1.10 kubernetes-cluster-01-master-0" >> /etc/hosts
-  echo "192.168.1.11 kubernetes-cluster-01-master-1" >> /etc/hosts
-  echo "192.168.1.12 kubernetes-cluster-01-master-2" >> /etc/hosts
-  echo "192.168.1.20 kubernetes-cluster-01-worker-0" >> /etc/hosts
-  echo "192.168.1.21 kubernetes-cluster-01-worker-1" >> /etc/hosts
-  echo "192.168.1.22 kubernetes-cluster-01-worker-2" >> /etc/hosts
-  echo "192.168.1.30 kubernetes-cluster-01-deployer" >> /etc/hosts
+  echo "240.158.0.137  kubernetes-cluster-01-master-0" >> /etc/hosts
+  echo "240.186.0.156 kubernetes-cluster-01-master-1" >> /etc/hosts
+  echo "240.117.0.121 kubernetes-cluster-01-master-2" >> /etc/hosts
+  echo "240.158.0.46 kubernetes-cluster-01-worker-0" >> /etc/hosts
+  echo "240.186.0.206 kubernetes-cluster-01-worker-1" >> /etc/hosts
+  echo "240.184.0.116 kubernetes-cluster-01-worker-2" >> /etc/hosts
+  echo "240.117.0.157 kubernetes-cluster-01-deployer" >> /etc/hosts
   SCRIPT
 
   $deployer_installations = <<-'SCRIPT'

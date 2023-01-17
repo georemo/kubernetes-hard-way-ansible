@@ -1,0 +1,23 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+ENV['VAGRANT_DEFAULT_PROVIDER'] = 'libvirt'
+# VAGRANT_LOG=debug
+
+Vagrant.configure("2") do |config|
+  cluster_name = "kubernetes-cluster-01"
+  cluster_network = "192.168.1"
+  (0..2).each do |i|
+    config.vm.define "#{cluster_name}-master-#{i}" do |config|
+      config.vm.hostname = "#{cluster_name}-master-#{i}"
+      config.vm.box = "alvistack/ubuntu-22.04"
+      config.vm.box_check_update = false
+      # config.vm.network "private_network", ip: "192.168.2.20#{i}"
+      # config.vm.network "public_network", bridge: "wlp2s0: Wi-Fi (AirPort)", auto_config: true
+      config.vm.network :public_network, ip: "#{cluster_network}.1#{i}"
+      config.vm.provider :libvirt do |v|
+      v.memory = 2048
+      end
+    end
+  end
+end

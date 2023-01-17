@@ -13,6 +13,8 @@ boxes/*
 /website/build
 /vagrant-spec.config.rb
 test/vagrant-spec/.vagrant/
+# any .vagrant directory
+.vagrant/
 
 # Bundler/Rubygems
 *.gem
@@ -53,3 +55,6 @@ test/vagrant-spec/boxes/*.box
 
 # ansible
 *.retry
+
+# logs
+*.logs

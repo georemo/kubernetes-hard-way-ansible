@@ -97,14 +97,14 @@ infrastructure:
   keepalived:
     ### IP of one of the Kubernetes master
     ### this will be the default master for keepalived
-    masterIP: 192.168.1.10
+    masterIP: 240.158.0.137 
     ### Keepalived interface
     ### mostly using interface where the API listen
     interface: eth1
     ### Keepalived routerID
     routerID: 50
     ### Virtual IP for Kubernetes API
-    virtualIP: 192.168.1.100
+    virtualIP: 240.158.0.137 0
     ### Virtual Port for Kubernetes API
     virtualIPPort: 64430
 

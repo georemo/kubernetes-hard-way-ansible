@@ -1,4 +1,10 @@
-Vagrant.configure('2') do |config|
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+VAGRANTFILE_API_VERSION = "2"
+ENV['VAGRANT_DEFAULT_PROVIDER'] = 'libvirt'
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+# Vagrant.configure('2') do |config|
   config.vm.box = 'bento/ubuntu-22.04'
 
   ### uncomment this to add custom DNS to your VM
@@ -14,13 +20,13 @@ Vagrant.configure('2') do |config|
   
 
   $common_installations = <<-'SCRIPT'
-  echo "192.168.1.10 kubernetes-cluster-01-master-0" >> /etc/hosts
-  echo "192.168.1.11 kubernetes-cluster-01-master-1" >> /etc/hosts
-  echo "192.168.1.12 kubernetes-cluster-01-master-2" >> /etc/hosts
-  echo "192.168.1.20 kubernetes-cluster-01-worker-0" >> /etc/hosts
-  echo "192.168.1.21 kubernetes-cluster-01-worker-1" >> /etc/hosts
-  echo "192.168.1.22 kubernetes-cluster-01-worker-2" >> /etc/hosts
-  echo "192.168.1.30 kubernetes-cluster-01-deployer" >> /etc/hosts
+  echo "240.158.0.137  kubernetes-cluster-01-master-0" >> /etc/hosts
+  echo "240.186.0.156 kubernetes-cluster-01-master-1" >> /etc/hosts
+  echo "240.117.0.121 kubernetes-cluster-01-master-2" >> /etc/hosts
+  echo "240.158.0.46 kubernetes-cluster-01-worker-0" >> /etc/hosts
+  echo "240.186.0.206 kubernetes-cluster-01-worker-1" >> /etc/hosts
+  echo "240.184.0.116 kubernetes-cluster-01-worker-2" >> /etc/hosts
+  echo "240.117.0.157 kubernetes-cluster-01-deployer" >> /etc/hosts
   SCRIPT
 
   $deployer_installations = <<-'SCRIPT'
@@ -45,7 +51,7 @@ Vagrant.configure('2') do |config|
 
   (0..2).each do |i|
     config.vm.define "#{cluster_name}-master-#{i}" do |master|
-      master.vm.hostname = "#{cluster_name}-master-#{i}"
+      # master.vm.hostname = "#{cluster_name}-master-#{i}"
       # master.vm.provision 'shell', inline: "echo '#{cluster_network}.1#{i} #{cluster_name}-master-#{i}' > /etc/hosts"
       master.vm.provision 'shell', inline: $common_installations
       # master.vm.network 'private_network', ip: "#{cluster_network}.1#{i}"
@@ -70,12 +76,13 @@ Vagrant.configure('2') do |config|
       # master.certificates.enabled = true
       # master.certificates.certs = Dir.glob('../../template/ca/root-cert.pem')
 
-      master.vm.provider 'virtualbox' do |vb|
+      master.vm.provider 'libvirt' do |vb|
+        # vb.hostname = "#{cluster_name}-master-#{i}"
         vb.name = "#{cluster_name}-master-#{i}"
         vb.memory = 3072
         vb.cpus = 2
-        vb.customize ['modifyvm', :id, '--nicpromisc2', 'allow-all']
-        vb.customize ['modifyvm', :id, '--nested-hw-virt', 'on']
+        # vb.customize ['modifyvm', :id, '--nicpromisc2', 'allow-all']
+        # vb.customize ['modifyvm', :id, '--nested-hw-virt', 'on']
       end
     end
   end
@@ -124,7 +131,7 @@ Vagrant.configure('2') do |config|
   # end
 
   config.vm.define "#{cluster_name}-deployer" do |deployer|
-    deployer.vm.hostname = "#{cluster_name}-deployer"
+    # deployer.vm.hostname = "#{cluster_name}-deployer"
     # deployer.vm.network 'private_network', ip: "#{cluster_network}.30"
     deployer.vm.network :public_network, ip: "#{cluster_network}.30"
     # deployer.vm.provision 'shell', inline: "echo '#{cluster_network}.30 #{cluster_name}-deployer' > /etc/hosts"
@@ -150,11 +157,12 @@ Vagrant.configure('2') do |config|
     # deployer.certificates.certs = Dir.glob('../../template/ca/root-cert.pem')
 
     
-    deployer.vm.provider 'virtualbox' do |vb|
+    deployer.vm.provider 'libvirt' do |vb|
+      # vb.hostname = "#{cluster_name}-deployer"
       vb.name = "#{cluster_name}-deployer"
       vb.memory = 2048
       vb.cpus = 2
-      vb.customize ['modifyvm', :id, '--nested-hw-virt', 'on']
+      # vb.customize ['modifyvm', :id, '--nested-hw-virt', 'on']
     end
   end
 end

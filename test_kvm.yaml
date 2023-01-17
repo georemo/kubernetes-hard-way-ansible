@@ -1,0 +1,22 @@
+network:
+    ethernets:
+       eth0:
+          dhcp4: false
+          dhcp6: false
+    bridges:
+       br0:
+          interfaces: [eth0]
+          dhcp4: false
+          addresses: [10.254.152.27/24]
+          macaddress: 01:26:3b:4b:1d:43
+          routes:
+              - to: default
+                via: 10.254.152.1
+                metric: 100
+          nameservers:
+              addresses: [8.8.8.8]
+          parameters:
+              stp: false
+          dhcp6: false
+    version: 2
+

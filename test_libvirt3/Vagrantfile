@@ -1,0 +1,44 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+ENV['VAGRANT_DEFAULT_PROVIDER'] = 'libvirt'
+
+
+Vagrant.configure("2") do |config|
+    
+  ##### DEFINE VM #####
+  config.vm.define "ubuntu-10" do |config|
+    config.vm.hostname = "ubuntu-10"
+    config.vm.box = "alvistack/ubuntu-22.04"
+    config.vm.box_check_update = false
+    config.vm.network "private_network", ip: "192.168.18.10"
+    # config.vm.network "public_network", ip: "240.158.0.461"
+    # config.vm.network "public_network", :type => "bridge" , :dev => "bridge0", :mode => "bridge"
+    # config.vm.network "public_network", dev: "wlp2s0", bridge: "wlp2s0", mode: "bridge", ip: "192.168.1.170"
+    config.vm.provider :libvirt do |v|
+    v.memory = 2048
+    end
+  end
+
+  ##### DEFINE VM #####
+  config.vm.define "ubuntu-11" do |config|
+    config.vm.hostname = "ubuntu-11"
+    config.vm.box = "alvistack/ubuntu-22.04"
+    config.vm.box_check_update = false
+    config.vm.network "private_network", ip: "192.168.18.11"
+    config.vm.provider :libvirt do |v|
+    v.memory = 2048
+    end
+  end
+
+  ##### DEFINE VM #####
+  config.vm.define "ubuntu-12" do |config|
+    config.vm.hostname = "ubuntu-12"
+    config.vm.box = "alvistack/ubuntu-22.04"
+    config.vm.box_check_update = false
+    config.vm.network "private_network", ip: "192.168.18.12"
+    config.vm.provider :libvirt do |v|
+    v.memory = 2048
+    end
+  end
+end
