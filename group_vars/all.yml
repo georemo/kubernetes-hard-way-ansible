@@ -104,7 +104,7 @@ infrastructure:
     ### Keepalived routerID
     routerID: 50
     ### Virtual IP for Kubernetes API
-    virtualIP: 240.158.0.137 0
+    virtualIP: 240.158.0.137
     ### Virtual Port for Kubernetes API
     virtualIPPort: 64430
 
