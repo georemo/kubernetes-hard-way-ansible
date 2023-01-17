@@ -4,27 +4,27 @@
     name: git
     update_cache: yes
 
-- name: Download and extract Kubernetes Client
-  unarchive:
-    src: https://dl.k8s.io/{{ kubernetes.version }}/kubernetes-client-linux-amd64.tar.gz
-    dest: /opt/
-    remote_src: yes
+# - name: Download and extract Kubernetes Client
+#   unarchive:
+#     src: https://dl.k8s.io/{{ kubernetes.version }}/kubernetes-client-linux-amd64.tar.gz
+#     dest: /opt/
+#     remote_src: yes
 
-- name: install kubectl
-  copy:
-    src: /opt/kubernetes/client/bin/kubectl
-    dest: /usr/local/bin/kubectl
-    mode: a+x
-    remote_src: yes
+# - name: install kubectl
+#   copy:
+#     src: /opt/kubernetes/client/bin/kubectl
+#     dest: /usr/local/bin/kubectl
+#     mode: a+x
+#     remote_src: yes
 
-- name: install cfssl
-  get_url:
-    url: https://storage.googleapis.com/kubernetes-the-hard-way/cfssl/1.4.1/linux/cfssl
-    dest: /usr/local/bin/cfssl
-    mode: a+x
+# - name: install cfssl
+#   get_url:
+#     url: https://storage.googleapis.com/kubernetes-the-hard-way/cfssl/1.4.1/linux/cfssl
+#     dest: /usr/local/bin/cfssl
+#     mode: a+x
 
-- name: install cfssljson
-  get_url:
-    url: https://storage.googleapis.com/kubernetes-the-hard-way/cfssl/1.4.1/linux/cfssljson
-    dest: /usr/local/bin/cfssljson
-    mode: a+x
+# - name: install cfssljson
+#   get_url:
+#     url: https://storage.googleapis.com/kubernetes-the-hard-way/cfssl/1.4.1/linux/cfssljson
+#     dest: /usr/local/bin/cfssljson
+#     mode: a+x
