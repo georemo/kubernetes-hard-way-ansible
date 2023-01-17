@@ -11,12 +11,12 @@
   - 'conntrack'
   - 'ipset'
 
-- name: Disable SWAP in fstab
-  replace:
-    path: /etc/fstab
-    regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
-    replace: '# \1'
-    backup: yes
+# - name: Disable SWAP in fstab
+#   replace:
+#     path: /etc/fstab
+#     regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
+#     replace: '# \1'
+#     backup: yes
 
 - name: Disable swap
   command: swapoff -a
