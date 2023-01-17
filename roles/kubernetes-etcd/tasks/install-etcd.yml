@@ -1,8 +1,8 @@
-# - name: Downlaod and Extract etcd-{{ kubernetes.components.etcd.version }}-linux-amd64.tar.gz into /tmp/
-#   unarchive:
-#     src: https://github.com/coreos/etcd/releases/download/{{ kubernetes.components.etcd.version }}/etcd-{{ kubernetes.components.etcd.version }}-linux-amd64.tar.gz
-#     dest: /tmp/
-#     remote_src: yes
+- name: Downlaod and Extract etcd-{{ kubernetes.components.etcd.version }}-linux-amd64.tar.gz into /tmp/
+  unarchive:
+    src: https://github.com/coreos/etcd/releases/download/{{ kubernetes.components.etcd.version }}/etcd-{{ kubernetes.components.etcd.version }}-linux-amd64.tar.gz
+    dest: /tmp/
+    remote_src: yes
 
 - name: Move etcd files
   copy:
