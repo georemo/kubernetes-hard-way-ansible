@@ -1,8 +1,8 @@
 ---
-- name: install git
-  apt:
-    name: git
-    update_cache: yes
+# - name: install git
+#   apt:
+#     name: git
+#     update_cache: yes
 
 # - name: Download and extract Kubernetes Client
 #   unarchive:
