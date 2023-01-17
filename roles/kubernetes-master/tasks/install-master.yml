@@ -1,35 +1,35 @@
-- name: create kubernetes directory
-  file:
-    path: /etc/kubernetes/config/
-    state: directory
+# - name: create kubernetes directory
+#   file:
+#     path: /etc/kubernetes/config/
+#     state: directory
 
-- name: create kubernetes directory
-  file:
-    path: /var/lib/kubernetes/
-    state: directory
+# - name: create kubernetes directory
+#   file:
+#     path: /var/lib/kubernetes/
+#     state: directory
 
-- name: create kubectl directory
-  file:
-    path: /root/.kube/
-    state: directory
+# - name: create kubectl directory
+#   file:
+#     path: /root/.kube/
+#     state: directory
 
-- name: Download and extract Kubernetes server
-  unarchive:
-    src: https://dl.k8s.io/{{ kubernetes.version }}/kubernetes-server-linux-amd64.tar.gz
-    dest: /opt/
-    remote_src: yes
+# - name: Download and extract Kubernetes server
+#   unarchive:
+    # src: https://dl.k8s.io/{{ kubernetes.version }}/kubernetes-server-linux-amd64.tar.gz
+    # dest: /opt/
+    # remote_src: yes
 
-- name: install kubernetes service
-  copy:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-    mode: a+x
-    remote_src: yes
-  with_items:
-  - { src: '/opt/kubernetes/server/bin/kube-apiserver', dest: '/usr/local/bin/kube-apiserver' }
-  - { src: '/opt/kubernetes/server/bin/kube-controller-manager', dest: '/usr/local/bin/kube-controller-manager' }
-  - { src: '/opt/kubernetes/server/bin/kube-scheduler', dest: '/usr/local/bin/kube-scheduler' }
-  - { src: '/opt/kubernetes/server/bin/kubectl', dest: '/usr/local/bin/kubectl' }
+# - name: install kubernetes service
+#   copy:
+#     src: "{{ item.src }}"
+#     dest: "{{ item.dest }}"
+#     mode: a+x
+#     remote_src: yes
+#   with_items:
+#   - { src: '/opt/kubernetes/server/bin/kube-apiserver', dest: '/usr/local/bin/kube-apiserver' }
+#   - { src: '/opt/kubernetes/server/bin/kube-controller-manager', dest: '/usr/local/bin/kube-controller-manager' }
+#   - { src: '/opt/kubernetes/server/bin/kube-scheduler', dest: '/usr/local/bin/kube-scheduler' }
+#   - { src: '/opt/kubernetes/server/bin/kubectl', dest: '/usr/local/bin/kubectl' }
 
 - name: Copy cert
   copy: 

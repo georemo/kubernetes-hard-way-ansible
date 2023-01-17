@@ -2,35 +2,35 @@
 # This roles generate CA & kubeconfig in deployer node
 # deployer node send the CA & kubeconfig into all nodes
 #
-# - name: generate certificate & kubeconfig
-#   become: yes
-#   hosts: deployer
-#   roles:
-#     - certificate-ca
-#     - certificate-etcd
-#     - certificate-master
-#     - certificate-worker
+- name: generate certificate & kubeconfig
+  become: yes
+  hosts: deployer
+  roles:
+    - certificate-ca
+    - certificate-etcd
+    - certificate-master
+    - certificate-worker
 
 #
 # data encryption for etcd
 # https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/
 #
-# - name: generate data-encryption
-#   become: yes
-#   hosts: deployer
-#   roles:
-#     - data-encryption
+- name: generate data-encryption
+  become: yes
+  hosts: deployer
+  roles:
+    - data-encryption
 
 #
 # This roles setup etcd cluster in etcd group ansible
 # you can merge etcd into master
 # by changing etcd group IP into master IP
 #
-# - name: setup etcd cluster
-#   become: yes
-#   hosts: etcd
-#   roles:
-#     - kubernetes-etcd
+- name: setup etcd cluster
+  become: yes
+  hosts: etcd
+  roles:
+    - kubernetes-etcd
 
 #
 # This roles setup haproxy keepalived in master node
