@@ -36,11 +36,14 @@
   - '/etc/kubernetes/manifests'
   - '/etc/containerd/'
 
-- name: Download and extract Kubernetes server
-  unarchive:
-    src: https://dl.k8s.io/{{ kubernetes.version }}/kubernetes-server-linux-amd64.tar.gz
-    dest: /opt/
-    remote_src: yes
+
+# wget https://dl.k8s.io/v1.22.10/kubernetes-server-linux-amd64.tar.gz
+# tar -xvzf kubernetes-server-linux-amd64.tar.gz -C /opt/
+# - name: Download and extract Kubernetes server {{ kubernetes.version }}
+#   unarchive:
+#     src: https://dl.k8s.io/{{ kubernetes.version }}/kubernetes-server-linux-amd64.tar.gz
+#     dest: /opt/
+#     remote_src: yes
 
 - name: install kubectl, kube-proxy, and kubelet
   copy:
