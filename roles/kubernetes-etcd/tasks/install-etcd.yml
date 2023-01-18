@@ -5,11 +5,10 @@
 #     src: https://github.com/coreos/etcd/releases/download/{{ kubernetes.components.etcd.version }}/etcd-{{ kubernetes.components.etcd.version }}-linux-amd64.tar.gz
 #     dest: /tmp/
 #     remote_src: yes
-
-# sudo tar -xvf cni-plugins-linux-amd64-v1.1.1.tgz -C /opt/cni/bin/
+# temporary replacement below:
 - name: This command will change the working directory to somedir/
   ansible.builtin.shell:
-    cmd: etcd-{{ kubernetes.components.etcd.version }}-linux-amd64.tar.gz -C /tmp/
+    cmd: tar -xvf etcd-{{ kubernetes.components.etcd.version }}-linux-amd64.tar.gz -C /tmp/
 
 
 - name: Move etcd files
