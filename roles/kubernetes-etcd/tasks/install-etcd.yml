@@ -6,6 +6,12 @@
 #     dest: /tmp/
 #     remote_src: yes
 
+# sudo tar -xvf cni-plugins-linux-amd64-v1.1.1.tgz -C /opt/cni/bin/
+- name: This command will change the working directory to somedir/
+  ansible.builtin.shell:
+    cmd: etcd-{{ kubernetes.components.etcd.version }}-linux-amd64.tar.gz -C /tmp/
+
+
 - name: Move etcd files
   copy:
     src: "/tmp/etcd-{{ kubernetes.components.etcd.version }}-linux-amd64/{{item}}"

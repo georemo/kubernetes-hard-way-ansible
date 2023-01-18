@@ -63,6 +63,7 @@ netlink_diag
 nf_nat
 overlay
 br_netfilter
+aufs
 then:
 file: roles/kubernetes-worker/templates/containerd.service.j2
 comment the line:
@@ -73,4 +74,92 @@ systemctl start containerd.service
 
 
 
+ERRORS:
+error="aufs is not supported (modprobe aufs failed: exit status 1 \"modprobe
+
+
+failed to load cni during init, please check CRI plugin status before setting up network for pods
+error="cni config load failed: no network config found in /etc/cni/net.d: cni plugin not initialized: failed to load cni config
+
+"aufs is not supported (modprobe aufs failed: exit status 1 \"modprobe: FATAL: Module aufs not found in directory /lib/modules/5.15.0-57-generic\\n\")
+
+"path /var/lib/containerd/io.containerd.snapshotter.v1.btrfs (zfs) must be a btrfs filesystem to be used with the btrfs snapshotter: skip plugin"
+
+"failed to load plugin io.containerd.snapshotter.v1.devmapper" error="devmapper not configured"
+
+"exec: \"zfs\": executable file not found in $PATH: \"zfs fs list -Hp -o name,origin,used,available,mountpoint,compression,type,volsize,quota,referenced,written,logicalused,use
+logicalused,usedbydataset local/containers/kubernetes-cluster-01-master-1\
+
+"could not use snapshotter devmapper in metadata plugin" error="devmapper not configured"
+
+--------
+after restart of containerd
+failed to load cni during init, please check CRI plugin status before setting up network for pods" error="cni config load failed: no network config 
+no network config found in /etc/cni/net.d: cni plugin not initialized: failed to load cni config
+
+ACTION:
+add aufs to modules.conf
+
+================================
+error="aufs is not supported (modprobe aufs failed: exit status 1 \"modprobe
+error="path /var/lib/containerd/io.containerd.snapshotter.v1.btrfs (zfs) must be a btrfs
+
+emp-07@emp-07 ~/kubernetes-hard-way-ansible (master)> lxc list
++--------------------------------+---------+----------------------+------+-----------+-----------+---------------+
+|              NAME              |  STATE  |         IPV4         | IPV6 |   TYPE    | SNAPSHOTS |   LOCATION    |
++--------------------------------+---------+----------------------+------+-----------+-----------+---------------+
+| A1                             | RUNNING | 240.184.0.201 (eth0) |      | CONTAINER | 0         | lxd-server-01 |
++--------------------------------+---------+----------------------+------+-----------+-----------+---------------+
+| kubernetes-cluster-01-deployer | RUNNING | 240.117.0.157 (eth0) |      | CONTAINER | 0         | emp-07        |
++--------------------------------+---------+----------------------+------+-----------+-----------+---------------+
+| kubernetes-cluster-01-master-0 | RUNNING | 240.158.0.137 (eth0) |      | CONTAINER | 0         | lxd-server-02 |
++--------------------------------+---------+----------------------+------+-----------+-----------+---------------+
+| kubernetes-cluster-01-master-1 | RUNNING | 240.186.0.156 (eth0) |      | CONTAINER | 0         | emp-06        |
++--------------------------------+---------+----------------------+------+-----------+-----------+---------------+
+| kubernetes-cluster-01-master-2 | RUNNING | 240.117.0.121 (eth0) |      | CONTAINER | 0         | emp-07        |
++--------------------------------+---------+----------------------+------+-----------+-----------+---------------+
+| kubernetes-cluster-01-worker-0 | RUNNING | 240.158.0.46 (eth0)  |      | CONTAINER | 0         | lxd-server-02 |
++--------------------------------+---------+----------------------+------+-----------+-----------+---------------+
+| kubernetes-cluster-01-worker-1 | RUNNING | 240.186.0.206 (eth0) |      | CONTAINER | 0         | emp-06        |
++--------------------------------+---------+----------------------+------+-----------+-----------+---------------+
+| kubernetes-cluster-01-worker-2 | RUNNING | 240.184.0.116 (eth0) |      | CONTAINER | 0         | lxd-server-01 |
++--------------------------------+---------+----------------------+------+-----------+-----------+---------------+
+emp-07@emp-07 ~/kubernetes-hard-way-ansible (master)> lxc shell kubernetes-cluster-01-worker-0
+root@kubernetes-cluster-01-worker-0:~# fish
+Welcome to fish, the friendly interactive shell
+Type help for instructions on how to use fish
+root@kubernetes-cluster-01-worker-0 ~# journalctl -xeu containerd.service
+
+time.
+
+
+
+
+
+
+
+time.
+
+
+
+
+
+
+
+.878749632Z" level=info msg="starting containerd" revision=10c12954828e7c7c9b6e0ea9b0c02b01407d3ae1 version=v1.6.6
+.940186328Z" level=info msg="loading plugin \"io.containerd.content.v1.content\"..." type=io.containerd.content.v1
+.940289625Z" level=info msg="loading plugin \"io.containerd.snapshotter.v1.aufs\"..." type=io.containerd.snapshotter.v1
+.943705820Z" level=info msg="skip loading plugin \"io.containerd.snapshotter.v1.aufs\"..." error="aufs is not supported (modprobe aufs failed: exit status 1 \"modprobe: FATAL: Modul>
+.943758332Z" level=info msg="loading plugin \"io.containerd.snapshotter.v1.btrfs\"..." type=io.containerd.snapshotter.v1
+.944068242Z" level=info msg="skip loading plugin \"io.containerd.snapshotter.v1.btrfs\"..." error="path /var/lib/containerd/io.containerd.snapshotter.v1.btrfs (zfs) must be a btrfs >
+.944117066Z" level=info msg="loading plugin \"io.containerd.snapshotter.v1.devmapper\"..." type=io.containerd.snapshotter.v1
+.944138938Z" level=warning msg="failed to load plugin io.containerd.snapshotter.v1.devmapper" error="devmapper not configured"
+.944153286Z" level=info msg="loading plugin \"io.containerd.snapshotter.v1.native\"..." type=io.containerd.snapshotter.v1
+.944191908Z" level=info msg="loading plugin \"io.containerd.snapshotter.v1.overlayfs\"..." type=io.containerd.snapshotter.v1
+.999869876Z" level=info msg="loading plugin \"io.containerd.snapshotter.v1.zfs\"..." type=io.containerd.snapshotter.v1
+.000395916Z" level=info msg="skip loading plugin \"io.containerd.snapshotter.v1.zfs\"..." error="exec: \"zfs\": executable file not found in $PATH: \"zfs fs list -Hp -o name,origin,>
+.000499076Z" level=info msg="loading plugin \"io.containerd.metadata.v1.bolt\"..." type=io.containerd.metadata.v1
+.000650098Z" level=warning msg="could not use snapshotter devmapper in metadata plugin" error="devmapper not configured"
+.000679008Z" level=info msg="metadata content store policy set" policy=shared
+lines 6143-6174/6222 98%
 
