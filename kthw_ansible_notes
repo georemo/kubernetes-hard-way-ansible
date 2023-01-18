@@ -55,7 +55,7 @@ Jan 18 08:40:53 kubernetes-cluster-01-worker-0 systemd[1]: Starting containerd c
 Jan 18 08:40:53 kubernetes-cluster-01-worker-0 modprobe[3421]: modprobe: FATAL: Module overlay not found in directory /lib/modules/5.15.0-57-generic
 
 Procedure:
-nano /etc/modules-load.d/modules.conf
+sudo nano /etc/modules-load.d/modules.conf
 then add:
 ip_tables
 ip6_tables
